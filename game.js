@@ -364,9 +364,18 @@ function loadStageBackground(charKey) {
         stageBgLoaded = true;
     };
     stageBgImg.onerror = () => {
+        console.warn(`Background tidak dapat dimuatkan untuk: ${charKey}`);
         stageBgLoaded = false;
     };
-    stageBgImg.src = `background/${charKey.toLowerCase()}.png`;
+    // Peta charKey kepada nama fail background yang betul
+    const bgFileMap = {
+        nirnama: 'nirnama',
+        nadira: 'nadira',
+        jagad: 'jagad',
+        syaitan: 'sang syaitan' // fail sebenar: 'sang syaitan.png'
+    };
+    const bgFile = bgFileMap[charKey.toLowerCase()] || charKey.toLowerCase();
+    stageBgImg.src = `background/${bgFile}.png`;
 }
 
 

@@ -35,7 +35,7 @@ if (!$isMobile) {
             width: 100%;
             height: 100%;
             overflow: hidden;
-            background-color: #0b0c10;
+            background: radial-gradient(ellipse at 50% 30%, #1a0a14 0%, #0a0b12 40%, #050609 100%);
             font-family: 'Outfit', sans-serif;
             user-select: none;
             -webkit-user-select: none;
@@ -48,8 +48,9 @@ if (!$isMobile) {
             flex-direction: column;
             width: 100vw;
             height: 100vh;
-            background-color: #1a1c24;
+            background: linear-gradient(180deg, #12141d 0%, #1a1c24 50%, #15171f 100%);
             position: relative;
+            box-shadow: inset 0 0 80px rgba(255, 51, 51, 0.04), inset 0 0 40px rgba(50, 200, 255, 0.03);
         }
 
         /* 1. GameBoy Screen Bezel (Top Half) */
@@ -104,12 +105,12 @@ if (!$isMobile) {
         .gb-screen-viewport {
             width: 90%;
             height: 94%;
-            background-color: #0f111a;
+            background: radial-gradient(ellipse at 50% 40%, #12141f 0%, #0a0b11 60%, #060709 100%);
             border: 4px solid #08090c;
             border-radius: 8px;
             position: relative;
             overflow: hidden;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.9);
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.95), 0 0 15px rgba(50, 200, 255, 0.06);
         }
 
         /* Adjust overlays and containers to lock to top viewport */
@@ -122,7 +123,7 @@ if (!$isMobile) {
             min-height: auto !important;
             padding: 10px !important;
             box-sizing: border-box;
-            background: rgba(13, 17, 28, 0.95) !important;
+            background: linear-gradient(180deg, rgba(8, 10, 20, 0.98) 0%, rgba(13, 17, 28, 0.96) 100%) !important;
             display: none;
             justify-content: center;
             align-items: center;
