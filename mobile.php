@@ -55,7 +55,7 @@ if (!$isMobile) {
 
         /* 1. GameBoy Screen Bezel (Top Half) */
         .gb-screen-bezel {
-            height: 48%;
+            height: 60%;
             width: 100%;
             background-color: #121319;
             box-shadow: 0 4px 15px rgba(0,0,0,0.8);
@@ -65,7 +65,7 @@ if (!$isMobile) {
             justify-content: center;
             position: relative;
             box-sizing: border-box;
-            padding: 10px;
+            padding: 8px;
         }
 
         /* Power LED Light */
@@ -134,7 +134,7 @@ if (!$isMobile) {
             display: flex !important;
         }
 
-        /* Responsive canvas scale to viewport */
+        /* Responsive canvas scale to viewport — 2x zoom supaya watak jelas */
         .gb-screen-viewport .canvas-wrapper {
             width: 100% !important;
             height: 100% !important;
@@ -143,15 +143,17 @@ if (!$isMobile) {
             box-shadow: none !important;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-end;   /* angkur ke bawah — lantai sentiasa kelihatan */
+            overflow: hidden;        /* potong lebihan canvas yang diskalakan */
         }
 
         .gb-screen-viewport canvas {
-            width: 100% !important;
+            width: 100% !important;  /* penuh lebar dulu, kemudian skala 1.25x */
             height: auto !important;
             aspect-ratio: 16/9 !important;
-            max-height: 100% !important;
-            object-fit: contain;
+            max-height: none !important;
+            transform: scale(1.25);
+            transform-origin: bottom center;
         }
 
         /* Glass Cards adaptation for small screens */
@@ -296,7 +298,7 @@ if (!$isMobile) {
 
         /* 2. GameBoy Controller (Bottom Half) */
         .gb-controller {
-            height: 52%;
+            height: 40%;
             width: 100%;
             background: linear-gradient(135deg, #32353f, #1b1d22);
             box-shadow: inset 0 8px 16px rgba(0,0,0,0.5);
@@ -304,7 +306,7 @@ if (!$isMobile) {
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 20px 25px 20px;
+            padding: 10px 20px 20px 20px;
             box-sizing: border-box;
             position: relative;
         }

@@ -17,10 +17,10 @@ const CHARACTER_PRESETS = {
         maxHealth: 100,
         speed: 5.5,
         mass: 1.0,
-        range: 60,
+        range: 96,
         damage: 10,
-        width: 52,
-        height: 145,
+        width: 83,
+        height: 232,
         description: 'Balanced Shoto. Good reach and fireballs.'
     },
     nadira: {
@@ -29,10 +29,10 @@ const CHARACTER_PRESETS = {
         maxHealth: 100,
         speed: 4.8,
         mass: 0.9,
-        range: 120, // Extended weapon range
+        range: 192, // Extended weapon range
         damage: 8,
-        width: 46,
-        height: 154,
+        width: 74,
+        height: 246,
         description: 'Zoner. High range attacks using scarf/spear.'
     },
     jagad: {
@@ -41,10 +41,10 @@ const CHARACTER_PRESETS = {
         maxHealth: 90, // Lower health
         speed: 7.2, // Very fast
         mass: 0.8,
-        range: 50,
+        range: 80,
         damage: 11,
-        width: 44,
-        height: 122,
+        width: 70,
+        height: 195,
         description: 'Rushdown. Rapid movement and charge lunge.'
     },
     syaitan: {
@@ -53,10 +53,10 @@ const CHARACTER_PRESETS = {
         maxHealth: 130, // High health
         speed: 3.5, // Slow
         mass: 1.8, // Heavy
-        range: 40,
+        range: 64,
         damage: 14,
-        width: 76,
-        height: 178,
+        width: 122,
+        height: 285,
         description: 'Grappler Boss. Unblockable command grabs, heavy mass.'
     }
 };
@@ -364,18 +364,10 @@ function loadStageBackground(charKey) {
         stageBgLoaded = true;
     };
     stageBgImg.onerror = () => {
-        console.warn(`Background tidak dapat dimuatkan untuk: ${charKey}`);
+        console.warn(`Background tidak dapat dimuatkan: background/${charKey.toLowerCase()}.png`);
         stageBgLoaded = false;
     };
-    // Peta charKey kepada nama fail background yang betul
-    const bgFileMap = {
-        nirnama: 'nirnama',
-        nadira: 'nadira',
-        jagad: 'jagad',
-        syaitan: 'sang syaitan' // fail sebenar: 'sang syaitan.png'
-    };
-    const bgFile = bgFileMap[charKey.toLowerCase()] || charKey.toLowerCase();
-    stageBgImg.src = `background/${bgFile}.png`;
+    stageBgImg.src = `background/${charKey.toLowerCase()}.png`;
 }
 
 
@@ -830,6 +822,10 @@ class Sprite {
         this.height = this.preset.height || 145;
         this.scaleY = 1.0; // Dynamic scale for crouching
         
+        // Base preset heights for scale calculation
+        const basePresetH = this.preset.name === 'Sang Syaitan' ? 178 : (this.preset.name === 'Nadira' ? 154 : (this.preset.name === 'Jagad' ? 122 : 145));
+        this.presetScale = this.height / basePresetH;
+        
         // Attributes
         this.maxHealth = this.preset.maxHealth;
         this.health = this.preset.maxHealth;
@@ -864,8 +860,8 @@ class Sprite {
         this.attackBox = {
             position: { x: this.position.x, y: this.position.y },
             width: this.preset.range,
-            height: 50,
-            offset: { x: 0, y: 30 }
+            height: 50 * this.presetScale,
+            offset: { x: 0, y: 30 * this.presetScale }
         };
     }
 
@@ -883,7 +879,7 @@ class Sprite {
     }
 
     draw() {
-        const headRadius = this.preset.name === 'Sang Syaitan' ? 22 : 14;
+        const headRadius = (this.preset.name === 'Sang Syaitan' ? 22 : 14) * this.presetScale;
         const px = this.position.x;
         const py = this.position.y;
         const w = this.width;
@@ -1206,10 +1202,10 @@ class Sprite {
 
         // ================= DRAW NEON SKELETON =================
         const centerX = px + w / 2;
-        const neckY = py + 26;
+        const neckY = py + 26 * this.presetScale * this.scaleY;
         const headY = neckY - headRadius;
         const pelvisY = py + h * 0.65;
-        const shoulderY = py + 39;
+        const shoulderY = py + 39 * this.presetScale * this.scaleY;
         const floorY = py + h;
 
         // 1. Draw Head (glowing circle)
@@ -1561,7 +1557,7 @@ class Sprite {
         }
         
         // Attack Box height adjustments (crouch attacks lower down)
-        this.attackBox.position.y = this.position.y + this.attackBox.offset.y + (this.isCrouching ? 35 : 0);
+        this.attackBox.position.y = this.position.y + this.attackBox.offset.y + (this.isCrouching ? 35 * this.presetScale : 0);
 
         this.draw();
     }
@@ -1578,14 +1574,14 @@ class Sprite {
 
         if (type === 'light') {
             this.attackBox.width = this.preset.range;
-            this.attackBox.height = 40;
-            this.attackBox.offset.y = 25;
+            this.attackBox.height = 40 * this.presetScale;
+            this.attackBox.offset.y = 25 * this.presetScale;
             activeFrames = 100;
             cooldownFrames = 8;
         } else if (type === 'heavy') {
             this.attackBox.width = this.preset.range * 1.35;
-            this.attackBox.height = 70;
-            this.attackBox.offset.y = 15;
+            this.attackBox.height = 70 * this.presetScale;
+            this.attackBox.offset.y = 15 * this.presetScale;
             activeFrames = 220;
             cooldownFrames = 24;
         } else if (type === 'special') {
@@ -1600,7 +1596,7 @@ class Sprite {
             } else if (this.preset.name === 'Nadira') {
                 // Scarf sweep
                 this.attackBox.width = this.preset.range * 2.2; // Huge reach
-                this.attackBox.height = 50;
+                this.attackBox.height = 50 * this.presetScale;
                 activeFrames = 250;
                 cooldownFrames = 40;
             } else if (this.preset.name === 'Jagad') {
@@ -1615,8 +1611,8 @@ class Sprite {
             } else if (this.preset.name === 'Sang Syaitan') {
                 // Close command grab
                 this.attackBox.width = 45; // very short range
-                this.attackBox.height = 100;
-                this.attackBox.offset.y = 20;
+                this.attackBox.height = 100 * this.presetScale;
+                this.attackBox.offset.y = 20 * this.presetScale;
                 activeFrames = 220;
                 cooldownFrames = 45;
             }
@@ -2220,7 +2216,7 @@ function checkCombatCollisions() {
         const dir = player1.facing === 'right' ? 1 : -1;
         projectiles.push(new Projectile({
             x: player1.position.x + (player1.facing === 'right' ? player1.width + 10 : -20),
-            y: player1.position.y + 40,
+            y: player1.position.y + player1.actualHeight * 0.28,
             vx: dir * 13,
             color: player1.color,
             owner: 'p1',
@@ -2279,7 +2275,7 @@ function checkCombatCollisions() {
         const dir = player2.facing === 'right' ? 1 : -1;
         projectiles.push(new Projectile({
             x: player2.position.x + (player2.facing === 'right' ? player2.width + 10 : -20),
-            y: player2.position.y + 40,
+            y: player2.position.y + player2.actualHeight * 0.28,
             vx: dir * 13,
             color: player2.color,
             owner: 'p2',
