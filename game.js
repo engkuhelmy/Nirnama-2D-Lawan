@@ -23,8 +23,8 @@ const CHARACTER_PRESETS = {
         height: 232,
         description: 'Balanced Shoto. Good reach and fireballs.'
     },
-    nadira: {
-        name: 'Nadira',
+    cendana: {
+        name: 'Cendana',
         color: '#00ff66', // Glowing Green
         maxHealth: 100,
         speed: 4.8,
@@ -35,8 +35,8 @@ const CHARACTER_PRESETS = {
         height: 246,
         description: 'Zoner. High range attacks using scarf/spear.'
     },
-    jagad: {
-        name: 'Jagad',
+    nadim: {
+        name: 'Nadim',
         color: '#ffea00', // Glowing Yellow
         maxHealth: 90, // Lower health
         speed: 7.2, // Very fast
@@ -65,7 +65,7 @@ const CHARACTER_PRESETS = {
 let currentPlayerName = '';
 let gameMode = 'sp'; // 'sp' = Solo vs CPU, 'vs' = Local Multiplayer
 let p1Char = 'nirnama';
-let p2Char = 'nadira';
+let p2Char = 'cendana';
 let p1Wins = 0;
 let p2Wins = 0;
 let roundNumber = 1;
@@ -153,27 +153,27 @@ nirnamaSpriteImg.onload = () => {
 };
 nirnamaSpriteImg.src = 'nirnama_sprites.jpg';
 
-// Nadira Sprite Sheet Assets
-const nadiraSpriteImg = new Image();
-let nadiraSpriteSheetLoaded = false;
-let nadiraTransparentCanvas = null;
-let nadiraTransparentCtx = null;
-let nadiraSpriteSheetWidth = 1024; // Default width
-let nadiraSpriteSheetHeight = 1024; // Default height
-let nadiraPreviewDataUrl = null;
+// Cendana Sprite Sheet Assets
+const cendanaSpriteImg = new Image();
+let cendanaSpriteSheetLoaded = false;
+let cendanaTransparentCanvas = null;
+let cendanaTransparentCtx = null;
+let cendanaSpriteSheetWidth = 1024; // Default width
+let cendanaSpriteSheetHeight = 1024; // Default height
+let cendanaPreviewDataUrl = null;
 
-nadiraSpriteImg.onload = () => {
-    nadiraSpriteSheetWidth = nadiraSpriteImg.naturalWidth || nadiraSpriteImg.width || 1024;
-    nadiraSpriteSheetHeight = nadiraSpriteImg.naturalHeight || nadiraSpriteImg.height || 1024;
+cendanaSpriteImg.onload = () => {
+    cendanaSpriteSheetWidth = cendanaSpriteImg.naturalWidth || cendanaSpriteImg.width || 1024;
+    cendanaSpriteSheetHeight = cendanaSpriteImg.naturalHeight || cendanaSpriteImg.height || 1024;
 
-    nadiraTransparentCanvas = document.createElement('canvas');
-    nadiraTransparentCanvas.width = nadiraSpriteSheetWidth;
-    nadiraTransparentCanvas.height = nadiraSpriteSheetHeight;
-    nadiraTransparentCtx = nadiraTransparentCanvas.getContext('2d');
-    nadiraTransparentCtx.drawImage(nadiraSpriteImg, 0, 0);
+    cendanaTransparentCanvas = document.createElement('canvas');
+    cendanaTransparentCanvas.width = cendanaSpriteSheetWidth;
+    cendanaTransparentCanvas.height = cendanaSpriteSheetHeight;
+    cendanaTransparentCtx = cendanaTransparentCanvas.getContext('2d');
+    cendanaTransparentCtx.drawImage(cendanaSpriteImg, 0, 0);
     
     try {
-        const imgData = nadiraTransparentCtx.getImageData(0, 0, nadiraSpriteSheetWidth, nadiraSpriteSheetHeight);
+        const imgData = cendanaTransparentCtx.getImageData(0, 0, cendanaSpriteSheetWidth, cendanaSpriteSheetHeight);
         const data = imgData.data;
         for (let i = 0; i < data.length; i += 4) {
             const r = data[i];
@@ -184,15 +184,15 @@ nadiraSpriteImg.onload = () => {
                 data[i + 3] = 0; // Alpha = 0
             }
         }
-        nadiraTransparentCtx.putImageData(imgData, 0, 0);
+        cendanaTransparentCtx.putImageData(imgData, 0, 0);
         
         // Generate clean preview for character select screen (Idle pose)
-        // Nadira's Idle pose is at row 3, col 0 in the 4x4 sheet.
-        const cellW = nadiraSpriteSheetWidth / 4;
-        const cellH = nadiraSpriteSheetHeight / 4;
-        const scale = nadiraSpriteSheetWidth / 1024;
+        // Cendana's Idle pose is at row 3, col 0 in the 4x4 sheet.
+        const cellW = cendanaSpriteSheetWidth / 4;
+        const cellH = cendanaSpriteSheetHeight / 4;
+        const scale = cendanaSpriteSheetWidth / 1024;
         
-        // Custom crop bounds for Nadira to avoid cutting her off:
+        // Custom crop bounds for Cendana to avoid cutting her off:
         // sx_offset = 16, sy_offset = 10, sw = 224, sh = 236
         const psw = Math.round(224 * scale);
         const psh = Math.round(236 * scale);
@@ -203,44 +203,44 @@ nadiraSpriteImg.onload = () => {
         previewCanvas.width = psw;
         previewCanvas.height = psh;
         const previewCtx = previewCanvas.getContext('2d');
-        previewCtx.drawImage(nadiraTransparentCanvas, psx, psy, psw, psh, 0, 0, psw, psh);
-        nadiraPreviewDataUrl = previewCanvas.toDataURL();
+        previewCtx.drawImage(cendanaTransparentCanvas, psx, psy, psw, psh, 0, 0, psw, psh);
+        cendanaPreviewDataUrl = previewCanvas.toDataURL();
         
-        nadiraSpriteSheetLoaded = true;
+        cendanaSpriteSheetLoaded = true;
         
         // Update character select screen if it was already updated
         if (typeof updateCharacterSelectUI === 'function') {
             updateCharacterSelectUI();
         }
     } catch (err) {
-        console.error("Gagal melakukan chroma keying pada sprite sheet Nadira:", err);
-        nadiraSpriteSheetLoaded = true;
-        nadiraTransparentCanvas = nadiraSpriteImg; // Fallback
+        console.error("Gagal melakukan chroma keying pada sprite sheet Cendana:", err);
+        cendanaSpriteSheetLoaded = true;
+        cendanaTransparentCanvas = cendanaSpriteImg; // Fallback
     }
 };
-nadiraSpriteImg.src = 'nadira_sprites.jpg';
+cendanaSpriteImg.src = 'cendana_sprites.jpg';
 
-// Jagad Sprite Sheet Assets
-const jagadSpriteImg = new Image();
-let jagadSpriteSheetLoaded = false;
-let jagadTransparentCanvas = null;
-let jagadTransparentCtx = null;
-let jagadSpriteSheetWidth = 1024; // Default width
-let jagadSpriteSheetHeight = 1024; // Default height
-let jagadPreviewDataUrl = null;
+// Nadim Sprite Sheet Assets
+const nadimSpriteImg = new Image();
+let nadimSpriteSheetLoaded = false;
+let nadimTransparentCanvas = null;
+let nadimTransparentCtx = null;
+let nadimSpriteSheetWidth = 1024; // Default width
+let nadimSpriteSheetHeight = 1024; // Default height
+let nadimPreviewDataUrl = null;
 
-jagadSpriteImg.onload = () => {
-    jagadSpriteSheetWidth = jagadSpriteImg.naturalWidth || jagadSpriteImg.width || 1024;
-    jagadSpriteSheetHeight = jagadSpriteImg.naturalHeight || jagadSpriteImg.height || 1024;
+nadimSpriteImg.onload = () => {
+    nadimSpriteSheetWidth = nadimSpriteImg.naturalWidth || nadimSpriteImg.width || 1024;
+    nadimSpriteSheetHeight = nadimSpriteImg.naturalHeight || nadimSpriteImg.height || 1024;
 
-    jagadTransparentCanvas = document.createElement('canvas');
-    jagadTransparentCanvas.width = jagadSpriteSheetWidth;
-    jagadTransparentCanvas.height = jagadSpriteSheetHeight;
-    jagadTransparentCtx = jagadTransparentCanvas.getContext('2d');
-    jagadTransparentCtx.drawImage(jagadSpriteImg, 0, 0);
+    nadimTransparentCanvas = document.createElement('canvas');
+    nadimTransparentCanvas.width = nadimSpriteSheetWidth;
+    nadimTransparentCanvas.height = nadimSpriteSheetHeight;
+    nadimTransparentCtx = nadimTransparentCanvas.getContext('2d');
+    nadimTransparentCtx.drawImage(nadimSpriteImg, 0, 0);
     
     try {
-        const imgData = jagadTransparentCtx.getImageData(0, 0, jagadSpriteSheetWidth, jagadSpriteSheetHeight);
+        const imgData = nadimTransparentCtx.getImageData(0, 0, nadimSpriteSheetWidth, nadimSpriteSheetHeight);
         const data = imgData.data;
         for (let i = 0; i < data.length; i += 4) {
             const r = data[i];
@@ -251,15 +251,15 @@ jagadSpriteImg.onload = () => {
                 data[i + 3] = 0; // Alpha = 0
             }
         }
-        jagadTransparentCtx.putImageData(imgData, 0, 0);
+        nadimTransparentCtx.putImageData(imgData, 0, 0);
         
         // Generate clean preview for character select screen (Idle pose)
-        // Jagad's Idle pose is at row 3, col 0 in the 4x4 sheet.
-        const cellW = jagadSpriteSheetWidth / 4;
-        const cellH = jagadSpriteSheetHeight / 4;
-        const scale = jagadSpriteSheetWidth / 1024;
+        // Nadim's Idle pose is at row 3, col 0 in the 4x4 sheet.
+        const cellW = nadimSpriteSheetWidth / 4;
+        const cellH = nadimSpriteSheetHeight / 4;
+        const scale = nadimSpriteSheetWidth / 1024;
         
-        // Custom crop bounds for Jagad to avoid cutting him off:
+        // Custom crop bounds for Nadim to avoid cutting him off:
         // sx_offset = 16, sy_offset = 16, sw = 224, sh = 224
         const psw = Math.round(224 * scale);
         const psh = Math.round(224 * scale);
@@ -270,22 +270,22 @@ jagadSpriteImg.onload = () => {
         previewCanvas.width = psw;
         previewCanvas.height = psh;
         const previewCtx = previewCanvas.getContext('2d');
-        previewCtx.drawImage(jagadTransparentCanvas, psx, psy, psw, psh, 0, 0, psw, psh);
-        jagadPreviewDataUrl = previewCanvas.toDataURL();
+        previewCtx.drawImage(nadimTransparentCanvas, psx, psy, psw, psh, 0, 0, psw, psh);
+        nadimPreviewDataUrl = previewCanvas.toDataURL();
         
-        jagadSpriteSheetLoaded = true;
+        nadimSpriteSheetLoaded = true;
         
         // Update character select screen if it was already updated
         if (typeof updateCharacterSelectUI === 'function') {
             updateCharacterSelectUI();
         }
     } catch (err) {
-        console.error("Gagal melakukan chroma keying pada sprite sheet Jagad:", err);
-        jagadSpriteSheetLoaded = true;
-        jagadTransparentCanvas = jagadSpriteImg; // Fallback
+        console.error("Gagal melakukan chroma keying pada sprite sheet Nadim:", err);
+        nadimSpriteSheetLoaded = true;
+        nadimTransparentCanvas = nadimSpriteImg; // Fallback
     }
 };
-jagadSpriteImg.src = 'jagad_sprites.jpg';
+nadimSpriteImg.src = 'nadim_sprites.jpg';
 
 // Sang Syaitan Sprite Sheet Assets
 const syaitanSpriteImg = new Image();
@@ -539,7 +539,7 @@ function switchTab(tabId) {
 function showCharacterSelect(mode) {
     gameMode = mode;
     p1Char = 'nirnama';
-    p2Char = gameMode === 'sp' ? 'nadira' : 'jagad';
+    p2Char = gameMode === 'sp' ? 'cendana' : 'nadim';
     
     document.getElementById('p2PanelTitle').innerText = gameMode === 'sp' ? 'CPU' : 'Player 2';
     
@@ -609,26 +609,26 @@ function updateCharacterSelectUI() {
             document.getElementById('p1Preview').style.backgroundPosition = '-8px -8px';
             document.getElementById('p1Preview').style.backgroundRepeat = 'no-repeat';
         }
-    } else if (p1Char === 'nadira') {
-        if (nadiraPreviewDataUrl) {
-            document.getElementById('p1Preview').style.backgroundImage = `url('${nadiraPreviewDataUrl}')`;
+    } else if (p1Char === 'cendana') {
+        if (cendanaPreviewDataUrl) {
+            document.getElementById('p1Preview').style.backgroundImage = `url('${cendanaPreviewDataUrl}')`;
             document.getElementById('p1Preview').style.backgroundSize = 'contain';
             document.getElementById('p1Preview').style.backgroundPosition = 'center';
             document.getElementById('p1Preview').style.backgroundRepeat = 'no-repeat';
         } else {
-            document.getElementById('p1Preview').style.backgroundImage = "url('nadira_sprites.jpg')";
+            document.getElementById('p1Preview').style.backgroundImage = "url('cendana_sprites.jpg')";
             document.getElementById('p1Preview').style.backgroundSize = '320px 320px';
             document.getElementById('p1Preview').style.backgroundPosition = '-8px -8px';
             document.getElementById('p1Preview').style.backgroundRepeat = 'no-repeat';
         }
-    } else if (p1Char === 'jagad') {
-        if (jagadPreviewDataUrl) {
-            document.getElementById('p1Preview').style.backgroundImage = `url('${jagadPreviewDataUrl}')`;
+    } else if (p1Char === 'nadim') {
+        if (nadimPreviewDataUrl) {
+            document.getElementById('p1Preview').style.backgroundImage = `url('${nadimPreviewDataUrl}')`;
             document.getElementById('p1Preview').style.backgroundSize = 'contain';
             document.getElementById('p1Preview').style.backgroundPosition = 'center';
             document.getElementById('p1Preview').style.backgroundRepeat = 'no-repeat';
         } else {
-            document.getElementById('p1Preview').style.backgroundImage = "url('jagad_sprites.jpg')";
+            document.getElementById('p1Preview').style.backgroundImage = "url('nadim_sprites.jpg')";
             document.getElementById('p1Preview').style.backgroundSize = '320px 320px';
             document.getElementById('p1Preview').style.backgroundPosition = '-8px -8px';
             document.getElementById('p1Preview').style.backgroundRepeat = 'no-repeat';
@@ -673,26 +673,26 @@ function updateCharacterSelectUI() {
             document.getElementById('p2Preview').style.backgroundPosition = '-8px -8px';
             document.getElementById('p2Preview').style.backgroundRepeat = 'no-repeat';
         }
-    } else if (p2Char === 'nadira') {
-        if (nadiraPreviewDataUrl) {
-            document.getElementById('p2Preview').style.backgroundImage = `url('${nadiraPreviewDataUrl}')`;
+    } else if (p2Char === 'cendana') {
+        if (cendanaPreviewDataUrl) {
+            document.getElementById('p2Preview').style.backgroundImage = `url('${cendanaPreviewDataUrl}')`;
             document.getElementById('p2Preview').style.backgroundSize = 'contain';
             document.getElementById('p2Preview').style.backgroundPosition = 'center';
             document.getElementById('p2Preview').style.backgroundRepeat = 'no-repeat';
         } else {
-            document.getElementById('p2Preview').style.backgroundImage = "url('nadira_sprites.jpg')";
+            document.getElementById('p2Preview').style.backgroundImage = "url('cendana_sprites.jpg')";
             document.getElementById('p2Preview').style.backgroundSize = '320px 320px';
             document.getElementById('p2Preview').style.backgroundPosition = '-8px -8px';
             document.getElementById('p2Preview').style.backgroundRepeat = 'no-repeat';
         }
-    } else if (p2Char === 'jagad') {
-        if (jagadPreviewDataUrl) {
-            document.getElementById('p2Preview').style.backgroundImage = `url('${jagadPreviewDataUrl}')`;
+    } else if (p2Char === 'nadim') {
+        if (nadimPreviewDataUrl) {
+            document.getElementById('p2Preview').style.backgroundImage = `url('${nadimPreviewDataUrl}')`;
             document.getElementById('p2Preview').style.backgroundSize = 'contain';
             document.getElementById('p2Preview').style.backgroundPosition = 'center';
             document.getElementById('p2Preview').style.backgroundRepeat = 'no-repeat';
         } else {
-            document.getElementById('p2Preview').style.backgroundImage = "url('jagad_sprites.jpg')";
+            document.getElementById('p2Preview').style.backgroundImage = "url('nadim_sprites.jpg')";
             document.getElementById('p2Preview').style.backgroundSize = '320px 320px';
             document.getElementById('p2Preview').style.backgroundPosition = '-8px -8px';
             document.getElementById('p2Preview').style.backgroundRepeat = 'no-repeat';
@@ -771,21 +771,63 @@ class Projectile {
 
     draw() {
         c.save();
-        c.shadowBlur = 20;
+        
+        // Translate to projectile's position
+        c.translate(this.x, this.y);
+        
+        // Rotate according to velocity direction (if vx < 0, flip or rotate 180 degrees)
+        const angle = this.vx < 0 ? Math.PI : 0;
+        c.rotate(angle);
+        
+        // Apply glow effect
+        c.shadowBlur = 25;
         c.shadowColor = this.color;
-        c.fillStyle = this.color;
+        
+        // Aura background (sleek glowing blade backing)
+        c.fillStyle = 'rgba(255, 51, 51, 0.25)';
         c.beginPath();
-        c.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        c.ellipse(0, 0, 35, 12, 0, 0, Math.PI * 2);
         c.fill();
         
-        // Glow trail
-        c.globalAlpha = 0.4;
+        // Inner glowing core (red-white)
+        c.fillStyle = '#ffffff';
+        c.strokeStyle = this.color;
+        c.lineWidth = 2.5;
+        
+        // Draw a wavy Keris shape!
         c.beginPath();
-        c.arc(this.x - this.vx * 1.5, this.y, this.radius * 0.8, 0, Math.PI * 2);
+        // Hulu (hilt)
+        c.moveTo(-25, 0);
+        c.lineTo(-20, -5);
+        c.lineTo(-18, -2);
+        
+        // Sampir (wide guard typical of keris)
+        c.lineTo(-18, -10);
+        c.lineTo(-12, -10);
+        c.lineTo(-12, -4);
+        
+        // Wavy blade (Lok)
+        // Wave 1 up
+        c.quadraticCurveTo(-5, -8, 2, -2);
+        // Wave 2 down
+        c.quadraticCurveTo(8, 4, 14, -2);
+        // Wave 3 to tip
+        c.quadraticCurveTo(20, -6, 28, 0);
+        
+        // Bottom half of blade/guard
+        c.quadraticCurveTo(20, 6, 14, 2);
+        c.quadraticCurveTo(8, -4, 2, 2);
+        c.quadraticCurveTo(-5, 8, -12, 4);
+        
+        // Guard bottom
+        c.lineTo(-12, 8);
+        c.lineTo(-18, 8);
+        c.lineTo(-18, 2);
+        c.closePath();
+        
         c.fill();
-        c.beginPath();
-        c.arc(this.x - this.vx * 3.0, this.y, this.radius * 0.5, 0, Math.PI * 2);
-        c.fill();
+        c.stroke();
+        
         c.restore();
     }
 
@@ -793,15 +835,16 @@ class Projectile {
         this.x += this.vx;
         
         // Spawn tiny trail particles
-        if (Math.random() < 0.3) {
+        if (Math.random() < 0.4) {
+            const particleColor = Math.random() < 0.45 ? '#ffea00' : this.color;
             particles.push(new Particle({
-                x: this.x,
-                y: this.y,
-                vx: -this.vx * 0.2 + (Math.random() - 0.5) * 2,
-                vy: (Math.random() - 0.5) * 2,
-                color: this.color,
-                radius: Math.random() * 2 + 1,
-                decay: 0.05
+                x: this.x - this.vx * 1.5,
+                y: this.y + (Math.random() - 0.5) * 8,
+                vx: -this.vx * 0.15 + (Math.random() - 0.5) * 2,
+                vy: (Math.random() - 0.5) * 2.5,
+                color: particleColor,
+                radius: Math.random() * 2.5 + 1,
+                decay: 0.04
             }));
         }
     }
@@ -823,7 +866,7 @@ class Sprite {
         this.scaleY = 1.0; // Dynamic scale for crouching
         
         // Base preset heights for scale calculation
-        const basePresetH = this.preset.name === 'Sang Syaitan' ? 178 : (this.preset.name === 'Nadira' ? 154 : (this.preset.name === 'Jagad' ? 122 : 145));
+        const basePresetH = this.preset.name === 'Sang Syaitan' ? 178 : (this.preset.name === 'Cendana' ? 154 : (this.preset.name === 'Nadim' ? 122 : 145));
         this.presetScale = this.height / basePresetH;
         
         // Attributes
@@ -843,7 +886,7 @@ class Sprite {
         this.isCrouching = false;
         this.facing = isP2 ? 'left' : 'right';
         
-        // Charge variable (specifically for Jagad/Budak Kuning)
+        // Charge variable (specifically for Nadim/Budak Kuning)
         this.chargeTimer = 0;
         this.chargeDashing = false;
         
@@ -878,6 +921,111 @@ class Sprite {
         };
     }
 
+    drawCendanaSpecialEffect() {
+        const ext = this.facing === 'right' ? 1 : -1;
+        const px = this.position.x;
+        const py = this.position.y;
+        const w = this.width;
+        const h = this.actualHeight;
+        const centerX = px + w / 2;
+        const shoulderY = py + 39 * this.presetScale * this.scaleY;
+
+        c.save();
+        c.shadowBlur = 25;
+        c.shadowColor = '#00ffcc'; // Turquoise cyan glowing aura
+        c.strokeStyle = '#00ffcc';
+        c.lineWidth = 6;
+        c.lineCap = 'round';
+        c.lineJoin = 'round';
+
+        // Draw a beautiful wavy whip/selendang extending forward
+        c.beginPath();
+        c.moveTo(centerX, shoulderY);
+
+        const targetX = centerX + ext * 192;
+        const targetY = shoulderY + 20;
+
+        // Wave control points
+        const cp1x = centerX + ext * 60;
+        const cp1y = shoulderY - 40;
+        const cp2x = centerX + ext * 120;
+        const cp2y = shoulderY + 50;
+
+        c.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, targetX, targetY);
+        c.stroke();
+
+        // White inner core
+        c.strokeStyle = '#ffffff';
+        c.lineWidth = 2.5;
+        c.beginPath();
+        c.moveTo(centerX, shoulderY);
+        c.bezierCurveTo(cp1x, cp1y + 4, cp2x, cp2y + 4, targetX, targetY);
+        c.stroke();
+
+        // Tip impact glow
+        c.fillStyle = '#ffffff';
+        c.beginPath();
+        c.arc(targetX, targetY, 6, 0, Math.PI * 2);
+        c.fill();
+
+        // Spawn particles
+        if (Math.random() < 0.5) {
+            particles.push(new Particle({
+                x: targetX,
+                y: targetY,
+                vx: ext * (Math.random() * 3 + 1),
+                vy: (Math.random() - 0.5) * 4,
+                color: '#00ffcc',
+                radius: Math.random() * 3 + 2,
+                decay: 0.05
+            }));
+        }
+
+        c.restore();
+    }
+
+    drawNadimSpecialEffect() {
+        const px = this.position.x;
+        const py = this.position.y;
+        const w = this.width;
+        const h = this.actualHeight;
+        const centerX = px + w / 2;
+        const centerY = py + h / 2;
+
+        c.save();
+        c.shadowBlur = 35;
+        c.shadowColor = '#ffea00'; // Glowing yellow
+        
+        // Draw multiple glowing yellow rings/flames around the character
+        c.strokeStyle = '#ffea00';
+        c.lineWidth = 8;
+        c.globalAlpha = 0.4;
+        c.beginPath();
+        c.ellipse(centerX, centerY, w * 0.9, h * 0.55, 0, 0, Math.PI * 2);
+        c.stroke();
+
+        // Inner glowing core
+        c.strokeStyle = '#ffffff';
+        c.lineWidth = 3;
+        c.globalAlpha = 0.7;
+        c.beginPath();
+        c.ellipse(centerX, centerY, w * 0.8, h * 0.5, 0, 0, Math.PI * 2);
+        c.stroke();
+
+        // Draw motion ghosts behind him
+        const ext = this.facing === 'right' ? -1 : 1;
+        c.fillStyle = '#ffea00';
+        c.globalAlpha = 0.15;
+        for (let i = 1; i <= 3; i++) {
+            const gx = px + ext * i * 25;
+            c.beginPath();
+            c.ellipse(gx + w/2, centerY, w * 0.6, h * 0.45, 0, 0, Math.PI * 2);
+            c.fill();
+        }
+
+        c.restore();
+    }
+
     draw() {
         const headRadius = (this.preset.name === 'Sang Syaitan' ? 22 : 14) * this.presetScale;
         const px = this.position.x;
@@ -906,8 +1054,8 @@ class Sprite {
             c.translate(-centerX, -centerY);
         }
 
-        // Jagad Sprite Rendering Engine
-        if (this.preset.name === 'Jagad' && jagadSpriteSheetLoaded) {
+        // Nadim Sprite Rendering Engine
+        if (this.preset.name === 'Nadim' && nadimSpriteSheetLoaded) {
             let col = 0;
             let row = 3; // Idle is (0,3)
             
@@ -944,11 +1092,11 @@ class Sprite {
                 col = 0; row = 3; // Idle
             }
 
-            const cellW = jagadSpriteSheetWidth / 4;
-            const cellH = jagadSpriteSheetHeight / 4;
-            const scale = jagadSpriteSheetWidth / 1024;
+            const cellW = nadimSpriteSheetWidth / 4;
+            const cellH = nadimSpriteSheetHeight / 4;
+            const scale = nadimSpriteSheetWidth / 1024;
             
-            // Custom crop offsets to avoid cutoffs for Jagad:
+            // Custom crop offsets to avoid cutoffs for Nadim:
             // sx_offset = 16, sy_offset = 16, sw = 224, sh = 224
             const sx = Math.round(col * cellW + (16 * scale));
             const sy = Math.round(row * cellH + (16 * scale));
@@ -969,8 +1117,12 @@ class Sprite {
             const dx = px - (drawW - w) / 2;
             const dy = py - (drawH - h);
 
-            c.drawImage(jagadTransparentCanvas, sx, sy, sw, sh, dx, dy, drawW, drawH);
+            c.drawImage(nadimTransparentCanvas, sx, sy, sw, sh, dx, dy, drawW, drawH);
             c.restore();
+
+            if (this.chargeDashing) {
+                this.drawNadimSpecialEffect();
+            }
 
             c.restore(); // Restore outer rotation context save
             return; // Exit draw loop immediately to prevent fallback wireframe
@@ -1042,8 +1194,8 @@ class Sprite {
             return; // Exit draw loop immediately to prevent fallback wireframe
         }
 
-        // Nadira Sprite Rendering Engine
-        if (this.preset.name === 'Nadira' && nadiraSpriteSheetLoaded) {
+        // Cendana Sprite Rendering Engine
+        if (this.preset.name === 'Cendana' && cendanaSpriteSheetLoaded) {
             let col = 0;
             let row = 3; // Idle is (0,3)
             
@@ -1066,7 +1218,7 @@ class Sprite {
             } else if (this.velocity.y < 0) { // Jumping
                 col = 3; row = 1; // Leap / Mid-air
             } else if (this.velocity.x !== 0) {
-                // Animate Nadira's walk cycle across 4 frames in Row 0
+                // Animate Cendana's walk cycle across 4 frames in Row 0
                 const walkFrame = Math.floor(Date.now() / 120) % 4;
                 col = walkFrame;
                 row = 0;
@@ -1076,11 +1228,11 @@ class Sprite {
                 col = 0; row = 3; // Idle
             }
 
-            const cellW = nadiraSpriteSheetWidth / 4;
-            const cellH = nadiraSpriteSheetHeight / 4;
-            const scale = nadiraSpriteSheetWidth / 1024;
+            const cellW = cendanaSpriteSheetWidth / 4;
+            const cellH = cendanaSpriteSheetHeight / 4;
+            const scale = cendanaSpriteSheetWidth / 1024;
             
-            // Custom crop offsets to avoid cutoffs for Nadira:
+            // Custom crop offsets to avoid cutoffs for Cendana:
             // sx_offset = 16, sy_offset = 10, sw = 224, sh = 236
             const sx = Math.round(col * cellW + (16 * scale));
             const sy = Math.round(row * cellH + (10 * scale));
@@ -1101,8 +1253,12 @@ class Sprite {
             const dx = px - (drawW - w) / 2;
             const dy = py - (drawH - h);
 
-            c.drawImage(nadiraTransparentCanvas, sx, sy, sw, sh, dx, dy, drawW, drawH);
+            c.drawImage(cendanaTransparentCanvas, sx, sy, sw, sh, dx, dy, drawW, drawH);
             c.restore();
+
+            if (this.isAttacking && this.attackType === 'special') {
+                this.drawCendanaSpecialEffect();
+            }
 
             c.restore(); // Restore outer rotation context save
             return; // Exit draw loop immediately to prevent fallback wireframe
@@ -1239,7 +1395,7 @@ class Sprite {
             c.fill();
             c.stroke();
             c.restore();
-        } else if (this.preset.name === 'Nadira') {
+        } else if (this.preset.name === 'Cendana') {
             // Neck scarf wraps and trailing tails
             c.save();
             c.strokeStyle = '#00ffcc';
@@ -1328,8 +1484,8 @@ class Sprite {
                     lHand = { x: centerX - w * 1.3, y: py + h * 0.5 };
                 }
                 
-                // Nadira's scarf line extension
-                if (this.preset.name === 'Nadira') {
+                // Cendana's scarf line extension
+                if (this.preset.name === 'Cendana') {
                     c.save();
                     c.strokeStyle = '#00ffcc';
                     c.shadowColor = '#00ffcc';
@@ -1344,10 +1500,10 @@ class Sprite {
                 if (this.preset.name === 'Nirnama') {
                     lHand = { x: centerX + ext * 40, y: shoulderY + 5 };
                     rHand = { x: centerX + ext * 45, y: shoulderY - 5 };
-                } else if (this.preset.name === 'Nadira') {
+                } else if (this.preset.name === 'Cendana') {
                     rHand = { x: centerX + ext * 180, y: shoulderY };
                     rElbow = { x: centerX + ext * 90, y: shoulderY };
-                } else if (this.preset.name === 'Jagad') {
+                } else if (this.preset.name === 'Nadim') {
                     lHand = { x: centerX - ext * 20, y: py + h * 0.4 };
                     rHand = { x: centerX + ext * 70, y: shoulderY };
                 } else if (this.preset.name === 'Sang Syaitan') {
@@ -1388,7 +1544,7 @@ class Sprite {
         c.lineTo(centerX + pelWidth, pelvisY);
         c.stroke();
 
-        if (this.preset.name === 'Jagad') {
+        if (this.preset.name === 'Nadim') {
             // Waist sash belt decoration
             c.save();
             c.fillStyle = '#ffea0033';
@@ -1455,21 +1611,14 @@ class Sprite {
             c.restore();
         }
 
-        // Speed lines trail for Jagad lunge
-        if (this.preset.name === 'Jagad' && this.chargeDashing) {
-            c.save();
-            c.globalAlpha = 0.35;
-            c.lineWidth = 1;
-            c.strokeStyle = 'yellow';
-            const ghostOffset = this.facing === 'right' ? -35 : 35;
-            c.beginPath();
-            c.arc(centerX + ghostOffset, headY, headRadius, 0, Math.PI*2);
-            c.stroke();
-            c.beginPath();
-            c.moveTo(centerX + ghostOffset, neckY);
-            c.lineTo(centerX + ghostOffset, pelvisY);
-            c.stroke();
-            c.restore();
+        // Speed lines trail / Yellow glow for Nadim lunge
+        if (this.preset.name === 'Nadim' && this.chargeDashing) {
+            this.drawNadimSpecialEffect();
+        }
+
+        // Draw Cendana whip/selendang in wireframe mode
+        if (this.preset.name === 'Cendana' && this.isAttacking && this.attackType === 'special') {
+            this.drawCendanaSpecialEffect();
         }
 
         c.restore();
@@ -1593,13 +1742,13 @@ class Sprite {
                 this.attackBox.width = this.preset.range;
                 activeFrames = 180;
                 cooldownFrames = 30;
-            } else if (this.preset.name === 'Nadira') {
+            } else if (this.preset.name === 'Cendana') {
                 // Scarf sweep
                 this.attackBox.width = this.preset.range * 2.2; // Huge reach
                 this.attackBox.height = 50 * this.presetScale;
                 activeFrames = 250;
                 cooldownFrames = 40;
-            } else if (this.preset.name === 'Jagad') {
+            } else if (this.preset.name === 'Nadim') {
                 // Charge Dash
                 this.chargeDashing = true;
                 this.attackBox.width = this.preset.range;
@@ -1825,7 +1974,7 @@ function checkComboP1() {
     } 
     // 2. QCB (Quarter Circle Backward): Down, Down+Left, Left + Attack (s, a, f)
     else if (sequence.includes('saf') || sequence.includes('sf')) {
-        if (player1.preset.name === 'Nadira') {
+        if (player1.preset.name === 'Cendana') {
             player1.attack('special');
             showComboFeedback('p1ComboText', 'TETHER STRIKE!');
             p1InputHistory.length = 0;
@@ -1858,7 +2007,7 @@ function checkComboP2() {
         p2InputHistory.length = 0;
     }
     // QCB: Down, Left + K (Light Attack)
-    else if ((sequence.includes(down + left + 'k') || sequence.includes(down + 'k')) && player2.preset.name === 'Nadira') {
+    else if ((sequence.includes(down + left + 'k') || sequence.includes(down + 'k')) && player2.preset.name === 'Cendana') {
         player2.attack('special');
         showComboFeedback('p2ComboText', 'TETHER STRIKE!');
         p2InputHistory.length = 0;
@@ -1900,21 +2049,21 @@ function processInputs() {
             player1.velocity.x = player1.speed;
             player1.facing = 'right';
             
-            // Increment Jagad charge timer if holding forward
-            if (player1.preset.name === 'Jagad') {
+            // Increment Nadim charge timer if holding forward
+            if (player1.preset.name === 'Nadim') {
                 player1.chargeTimer = 0; // Reset charge if moving forward
             }
         } else if (keysPressed['a']) {
             player1.velocity.x = -player1.speed;
             player1.facing = 'left';
 
-            // Charge logic for Jagad (Charge back [left] to lunge forward)
-            if (player1.preset.name === 'Jagad') {
+            // Charge logic for Nadim (Charge back [left] to lunge forward)
+            if (player1.preset.name === 'Nadim') {
                 player1.chargeTimer += 16.67; // Add frames (approx 60fps)
             }
         } else {
-            // Jagad charge decays if not holding back
-            if (player1.preset.name === 'Jagad' && player1.chargeTimer > 0) {
+            // Nadim charge decays if not holding back
+            if (player1.preset.name === 'Nadim' && player1.chargeTimer > 0) {
                 player1.chargeTimer -= 8;
             }
         }
@@ -1944,8 +2093,8 @@ function processInputs() {
             keysPressed['g'] = false;
         } else if (keysPressed['r']) {
             // Quick easy shortcut special
-            // Check Jagad charge requirement
-            if (player1.preset.name === 'Jagad') {
+            // Check Nadim charge requirement
+            if (player1.preset.name === 'Nadim') {
                 if (player1.chargeTimer >= 800) {
                     player1.attack('special');
                     showComboFeedback('p1ComboText', 'LARIAN KUNING!');
@@ -1957,7 +2106,7 @@ function processInputs() {
             } else {
                 player1.attack('special');
                 const pName = player1.preset.name === 'Nirnama' ? 'PUKULAN ANGIN!' : 
-                              player1.preset.name === 'Nadira' ? 'TETHER STRIKE!' : 'GENGGAMAN MAUT!';
+                              player1.preset.name === 'Cendana' ? 'TETHER STRIKE!' : 'GENGGAMAN MAUT!';
                 showComboFeedback('p1ComboText', pName);
             }
             keysPressed['r'] = false;
@@ -1973,13 +2122,13 @@ function processInputs() {
             if (keysPressed['arrowright']) {
                 player2.velocity.x = player2.speed;
                 player2.facing = 'right';
-                if (player2.preset.name === 'Jagad') player2.chargeTimer += 16.67; // charge if moving back (facing left, right is back)
+                if (player2.preset.name === 'Nadim') player2.chargeTimer += 16.67; // charge if moving back (facing left, right is back)
             } else if (keysPressed['arrowleft']) {
                 player2.velocity.x = -player2.speed;
                 player2.facing = 'left';
-                if (player2.preset.name === 'Jagad') player2.chargeTimer = 0;
+                if (player2.preset.name === 'Nadim') player2.chargeTimer = 0;
             } else {
-                if (player2.preset.name === 'Jagad' && player2.chargeTimer > 0) player2.chargeTimer -= 8;
+                if (player2.preset.name === 'Nadim' && player2.chargeTimer > 0) player2.chargeTimer -= 8;
             }
 
             // Blocking
@@ -2006,7 +2155,7 @@ function processInputs() {
                 player2.attack('heavy');
                 keysPressed['l'] = false;
             } else if (keysPressed['i']) {
-                if (player2.preset.name === 'Jagad') {
+                if (player2.preset.name === 'Nadim') {
                     if (player2.chargeTimer >= 800) {
                         player2.attack('special');
                         showComboFeedback('p2ComboText', 'LARIAN KUNING!');
@@ -2017,7 +2166,7 @@ function processInputs() {
                 } else {
                     player2.attack('special');
                     const pName = player2.preset.name === 'Nirnama' ? 'PUKULAN ANGIN!' : 
-                                  player2.preset.name === 'Nadira' ? 'TETHER STRIKE!' : 'GENGGAMAN MAUT!';
+                                  player2.preset.name === 'Cendana' ? 'TETHER STRIKE!' : 'GENGGAMAN MAUT!';
                     showComboFeedback('p2ComboText', pName);
                 }
                 keysPressed['i'] = false;
@@ -2066,8 +2215,8 @@ function updateCPUAI() {
         const dir = isP1Left ? -1 : 1;
         player2.velocity.x = dir * player2.speed * 0.7; // Walk speed
         
-        // Accumulate charge for Jagad AI
-        if (player2.preset.name === 'Jagad') {
+        // Accumulate charge for Nadim AI
+        if (player2.preset.name === 'Nadim') {
             player2.chargeTimer += 16.67;
         }
 
@@ -2091,10 +2240,10 @@ function updateCPUAI() {
                 }
             } else if (roll < 0.65) {
                 // Special attacks
-                if (player2.preset.name === 'Nadira') {
+                if (player2.preset.name === 'Cendana') {
                     player2.attack('special');
                     showComboFeedback('p2ComboText', 'TETHER STRIKE!');
-                } else if (player2.preset.name === 'Jagad' && player2.chargeTimer >= 800) {
+                } else if (player2.preset.name === 'Nadim' && player2.chargeTimer >= 800) {
                     player2.attack('special');
                     showComboFeedback('p2ComboText', 'LARIAN KUNING!');
                     player2.chargeTimer = 0;
@@ -2191,10 +2340,10 @@ function checkCombatCollisions() {
                 if (player1.preset.name === 'Nirnama') {
                     // Fireball is separate, but direct sword push does some damage
                     dmg = Math.round(player1.baseDamage * 0.4);
-                } else if (player1.preset.name === 'Nadira') {
+                } else if (player1.preset.name === 'Cendana') {
                     dmg = Math.round(player1.baseDamage * 1.2);
                     stun = 35;
-                } else if (player1.preset.name === 'Jagad') {
+                } else if (player1.preset.name === 'Nadim') {
                     dmg = Math.round(player1.baseDamage * 1.5);
                     stun = 40;
                     unblockable = true; // Larian Kuning breaks blocks!
@@ -2250,10 +2399,10 @@ function checkCombatCollisions() {
             } else if (player2.attackType === 'special') {
                 if (player2.preset.name === 'Nirnama') {
                     dmg = Math.round(player2.baseDamage * 0.4);
-                } else if (player2.preset.name === 'Nadira') {
+                } else if (player2.preset.name === 'Cendana') {
                     dmg = Math.round(player2.baseDamage * 1.2);
                     stun = 35;
-                } else if (player2.preset.name === 'Jagad') {
+                } else if (player2.preset.name === 'Nadim') {
                     dmg = Math.round(player2.baseDamage * 1.5);
                     stun = 40;
                     unblockable = true;

@@ -140,7 +140,7 @@ if ($isMobile) {
                             </div>
                         </div>
                         <div class="combo-item">
-                            <span class="char-badge badge-nadira">Nadira</span>
+                            <span class="char-badge badge-cendana">Cendana</span>
                             <div class="combo-details">
                                 <h4>Tether Strike (Scarf Sweep)</h4>
                                 <p class="combo-keys">S ➔ S+A ➔ A + F (Bawah, Bawah-Kiri, Kiri + Punch) / R</p>
@@ -148,7 +148,7 @@ if ($isMobile) {
                             </div>
                         </div>
                         <div class="combo-item">
-                            <span class="char-badge badge-jagad">Jagad / Budak Kuning</span>
+                            <span class="char-badge badge-nadim">Nadim / Budak Kuning</span>
                             <div class="combo-details">
                                 <h4>Larian Kuning (Dash Charge)</h4>
                                 <p class="combo-keys">Tahan A (1 saat) ➔ D + F (Tahan Kiri, lepas tu Kanan + Punch) / R</p>
@@ -199,17 +199,17 @@ if ($isMobile) {
                                 <p>Balanced / Shoto</p>
                             </div>
                         </div>
-                        <div class="char-card" data-char="nadira" onclick="selectChar('nadira')">
+                        <div class="char-card" data-char="cendana" onclick="selectChar('cendana')">
                             <div class="char-color-indicator" style="background-color: #00ff66;"></div>
                             <div class="char-info">
-                                <h4>Nadira</h4>
+                                <h4>Cendana</h4>
                                 <p>Zoner / Mid-Range</p>
                             </div>
                         </div>
-                        <div class="char-card" data-char="jagad" onclick="selectChar('jagad')">
+                        <div class="char-card" data-char="nadim" onclick="selectChar('nadim')">
                             <div class="char-color-indicator" style="background-color: yellow;"></div>
                             <div class="char-info">
-                                <h4>Jagad</h4>
+                                <h4>Nadim</h4>
                                 <p>Rushdown / Agile</p>
                             </div>
                         </div>
@@ -224,7 +224,7 @@ if ($isMobile) {
 
                     <!-- Player 2 / CPU Selection -->
                     <div class="player-select-panel" id="p2SelectPanel">
-                        <h3><span id="p2PanelTitle">CPU</span>: <span id="p2SelectedName">Nadira</span></h3>
+                        <h3><span id="p2PanelTitle">CPU</span>: <span id="p2SelectedName">Cendana</span></h3>
                         <div class="char-avatar-container">
                             <div class="char-preview-box" id="p2Preview" style="background-color: #00ff66;">
                                 <!-- Will draw skeleton dynamically -->
@@ -274,7 +274,7 @@ if ($isMobile) {
                 <div class="hud-player p2-hud">
                     <div class="player-meta text-right">
                         <span class="hud-name" id="hudP2Name">CPU</span>
-                        <span class="hud-char" id="hudP2Char">Nadira</span>
+                        <span class="hud-char" id="hudP2Char">Cendana</span>
                     </div>
                     <div class="health-bar-container">
                         <div class="health-bar-fill" id="p2HealthBar"></div>
@@ -345,7 +345,7 @@ if ($isMobile) {
                     <div class="result-stat-item">
                         <span class="label">Pemain 2 / CPU</span>
                         <span class="val" id="resP2Name">CPU</span>
-                        <span class="val text-small" id="resP2Char">Nadira</span>
+                        <span class="val text-small" id="resP2Char">Cendana</span>
                     </div>
                 </div>
 

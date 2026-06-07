@@ -633,14 +633,14 @@ if (!$isMobile) {
                                     </div>
                                 </div>
                                 <div class="combo-item">
-                                    <span class="char-badge badge-nadira">Nadira</span>
+                                    <span class="char-badge badge-cendana">Cendana</span>
                                     <div class="combo-details">
                                         <h4>Tether Strike (Sweep)</h4>
                                         <p class="combo-keys">▼ ➔ ▼◀ ➔ ◀ + T / Butang K</p>
                                     </div>
                                 </div>
                                 <div class="combo-item">
-                                    <span class="char-badge badge-jagad">Jagad</span>
+                                    <span class="char-badge badge-nadim">Nadim</span>
                                     <div class="combo-details">
                                         <h4>Larian Kuning (Dash)</h4>
                                         <p class="combo-keys">Tahan ◀ (1s) ➔ ▶ + T / Butang K</p>
@@ -684,13 +684,13 @@ if (!$isMobile) {
                                     <div class="char-color-indicator" style="background-color: red;"></div>
                                     <div class="char-info"><h4>Nirnama</h4></div>
                                 </div>
-                                <div class="char-card" data-char="nadira" onclick="selectChar('nadira')">
+                                <div class="char-card" data-char="cendana" onclick="selectChar('cendana')">
                                     <div class="char-color-indicator" style="background-color: #00ff66;"></div>
-                                    <div class="char-info"><h4>Nadira</h4></div>
+                                    <div class="char-info"><h4>Cendana</h4></div>
                                 </div>
-                                <div class="char-card" data-char="jagad" onclick="selectChar('jagad')">
+                                <div class="char-card" data-char="nadim" onclick="selectChar('nadim')">
                                     <div class="char-color-indicator" style="background-color: yellow;"></div>
-                                    <div class="char-info"><h4>Jagad</h4></div>
+                                    <div class="char-info"><h4>Nadim</h4></div>
                                 </div>
                                 <div class="char-card" data-char="syaitan" onclick="selectChar('syaitan')">
                                     <div class="char-color-indicator" style="background-color: #aa00ff;"></div>
@@ -700,7 +700,7 @@ if (!$isMobile) {
 
                             <!-- Player 2 / CPU Selection -->
                             <div class="player-select-panel" id="p2SelectPanel">
-                                <h3><span id="p2PanelTitle">CPU</span>: <span id="p2SelectedName">Nadira</span></h3>
+                                <h3><span id="p2PanelTitle">CPU</span>: <span id="p2SelectedName">Cendana</span></h3>
                                 <div class="char-avatar-container">
                                     <div class="char-preview-box" id="p2Preview" style="background-color: #00ff66;"></div>
                                 </div>
@@ -748,7 +748,7 @@ if (!$isMobile) {
                         <div class="hud-player p2-hud">
                             <div class="player-meta text-right">
                                 <span class="hud-name" id="hudP2Name">CPU</span>
-                                <span class="hud-char" id="hudP2Char">Nadira</span>
+                                <span class="hud-char" id="hudP2Char">Cendana</span>
                             </div>
                             <div class="health-bar-container">
                                 <div class="health-bar-fill" id="p2HealthBar"></div>
@@ -802,7 +802,7 @@ if (!$isMobile) {
                             <div class="result-stat-item">
                                 <span class="label">CPU</span>
                                 <span class="val" id="resP2Name">CPU</span>
-                                <span class="val text-small" id="resP2Char">Nadira</span>
+                                <span class="val text-small" id="resP2Char">Cendana</span>
                             </div>
                         </div>
 
