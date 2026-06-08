@@ -23,7 +23,7 @@ Berikut adalah senarai pendekar yang boleh dipilih berserta serangan istimewa me
 
 3. **Nadim** (Rushdown / Agile)
    * **Kuasa Khas**: *Larian Kuning (Dash Charge)*
-   * **Butang Combo**: Tahan `A` (1 saat) ➔ `D + F` (Tahan Kiri, lepas tu Kanan + Punch) atau `R` / `Butang K` (pada peranti mudah alih)
+   * **Butang Combo**: `D ➔ D + G` (Kanan, Kanan + Kick) atau `R` / `Butang K` (pada peranti mudah alih)
    * **Penerangan**: Larian pantas yang diselubungi aura cahaya kuning tebal serta bayangan laju untuk merempuh dan memecahkan benteng pertahanan musuh (*block-breaker*).
 
 4. **Sang Syaitan** (Heavy Grappler / Boss)

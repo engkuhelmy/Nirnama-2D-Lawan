@@ -151,7 +151,7 @@ if ($isMobile) {
                             <span class="char-badge badge-nadim">Nadim / Budak Kuning</span>
                             <div class="combo-details">
                                 <h4>Larian Kuning (Dash Charge)</h4>
-                                <p class="combo-keys">Tahan A (1 saat) ➔ D + F (Tahan Kiri, lepas tu Kanan + Punch) / R</p>
+                                <p class="combo-keys">D ➔ D + G (Kanan, Kanan + Kick) / R</p>
                                 <p class="combo-desc">Larian deras yang melanggar dan memecahkan benteng pertahanan (block-breaker).</p>
                             </div>
                         </div>

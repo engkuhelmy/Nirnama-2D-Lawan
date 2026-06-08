@@ -642,9 +642,9 @@ if (!$isMobile) {
                                 <div class="combo-item">
                                     <span class="char-badge badge-nadim">Nadim</span>
                                     <div class="combo-details">
-                                        <h4>Larian Kuning (Dash)</h4>
-                                        <p class="combo-keys">Tahan ◀ (1s) ➔ ▶ + T / Butang K</p>
-                                    </div>
+                                         <h4>Larian Kuning (Dash)</h4>
+                                         <p class="combo-keys">▶ ➔ ▶ + S / Butang K</p>
+                                     </div>
                                 </div>
                                 <div class="combo-item">
                                     <span class="char-badge badge-syaitan">Sang Syaitan</span>

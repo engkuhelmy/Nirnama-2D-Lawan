@@ -1964,7 +1964,6 @@ function checkComboP1() {
     const sequence = p1InputHistory.map(h => h.key).join('');
     
     // 1. QCF (Quarter Circle Forward): Down, Down+Right, Right + Attack (s, d, f)
-    // Map lenient sequence search
     if (sequence.includes('sdf') || sequence.includes('sf')) {
         if (player1.preset.name === 'Nirnama') {
             player1.attack('special');
@@ -1987,6 +1986,13 @@ function checkComboP1() {
             showComboFeedback('p1ComboText', 'GENGGAMAN MAUT!');
             p1InputHistory.length = 0;
         }
+    }
+    // 4. Forward, Forward + Kick (d, d, g if facing right / a, a, g if facing left)
+    const fwdKeyP1 = player1.facing === 'right' ? 'd' : 'a';
+    if (sequence.includes(fwdKeyP1 + fwdKeyP1 + 'g') && player1.preset.name === 'Nadim') {
+        player1.attack('special');
+        showComboFeedback('p1ComboText', 'LARIAN KUNING!');
+        p1InputHistory.length = 0;
     }
 }
 
@@ -2016,6 +2022,13 @@ function checkComboP2() {
     else if (sequence.includes(down + down + 'l') && player2.preset.name === 'Sang Syaitan') {
         player2.attack('special');
         showComboFeedback('p2ComboText', 'GENGGAMAN MAUT!');
+        p2InputHistory.length = 0;
+    }
+    // Forward, Forward + Kick (right, right, l if facing right / left, left, l if facing left)
+    const fwdKeyP2 = player2.facing === 'right' ? right : left;
+    if (sequence.includes(fwdKeyP2 + fwdKeyP2 + 'l') && player2.preset.name === 'Nadim') {
+        player2.attack('special');
+        showComboFeedback('p2ComboText', 'LARIAN KUNING!');
         p2InputHistory.length = 0;
     }
 }
@@ -2048,24 +2061,9 @@ function processInputs() {
         if (keysPressed['d']) {
             player1.velocity.x = player1.speed;
             player1.facing = 'right';
-            
-            // Increment Nadim charge timer if holding forward
-            if (player1.preset.name === 'Nadim') {
-                player1.chargeTimer = 0; // Reset charge if moving forward
-            }
         } else if (keysPressed['a']) {
             player1.velocity.x = -player1.speed;
             player1.facing = 'left';
-
-            // Charge logic for Nadim (Charge back [left] to lunge forward)
-            if (player1.preset.name === 'Nadim') {
-                player1.chargeTimer += 16.67; // Add frames (approx 60fps)
-            }
-        } else {
-            // Nadim charge decays if not holding back
-            if (player1.preset.name === 'Nadim' && player1.chargeTimer > 0) {
-                player1.chargeTimer -= 8;
-            }
         }
 
         // Blocking: Block if holding direction away from opponent
@@ -2093,22 +2091,11 @@ function processInputs() {
             keysPressed['g'] = false;
         } else if (keysPressed['r']) {
             // Quick easy shortcut special
-            // Check Nadim charge requirement
-            if (player1.preset.name === 'Nadim') {
-                if (player1.chargeTimer >= 800) {
-                    player1.attack('special');
-                    showComboFeedback('p1ComboText', 'LARIAN KUNING!');
-                    player1.chargeTimer = 0;
-                } else {
-                    // Flash yellow warning for uncharged
-                    showComboFeedback('p1ComboText', 'TAHAN KIRI (1s) DAHULU!');
-                }
-            } else {
-                player1.attack('special');
-                const pName = player1.preset.name === 'Nirnama' ? 'PUKULAN ANGIN!' : 
-                              player1.preset.name === 'Cendana' ? 'TETHER STRIKE!' : 'GENGGAMAN MAUT!';
-                showComboFeedback('p1ComboText', pName);
-            }
+            player1.attack('special');
+            const pName = player1.preset.name === 'Nirnama' ? 'PUKULAN ANGIN!' : 
+                          player1.preset.name === 'Cendana' ? 'TETHER STRIKE!' : 
+                          player1.preset.name === 'Nadim' ? 'LARIAN KUNING!' : 'GENGGAMAN MAUT!';
+            showComboFeedback('p1ComboText', pName);
             keysPressed['r'] = false;
         }
     }
@@ -2122,13 +2109,9 @@ function processInputs() {
             if (keysPressed['arrowright']) {
                 player2.velocity.x = player2.speed;
                 player2.facing = 'right';
-                if (player2.preset.name === 'Nadim') player2.chargeTimer += 16.67; // charge if moving back (facing left, right is back)
             } else if (keysPressed['arrowleft']) {
                 player2.velocity.x = -player2.speed;
                 player2.facing = 'left';
-                if (player2.preset.name === 'Nadim') player2.chargeTimer = 0;
-            } else {
-                if (player2.preset.name === 'Nadim' && player2.chargeTimer > 0) player2.chargeTimer -= 8;
             }
 
             // Blocking
@@ -2155,20 +2138,11 @@ function processInputs() {
                 player2.attack('heavy');
                 keysPressed['l'] = false;
             } else if (keysPressed['i']) {
-                if (player2.preset.name === 'Nadim') {
-                    if (player2.chargeTimer >= 800) {
-                        player2.attack('special');
-                        showComboFeedback('p2ComboText', 'LARIAN KUNING!');
-                        player2.chargeTimer = 0;
-                    } else {
-                        showComboFeedback('p2ComboText', 'TAHAN KANAN (1s) DAHULU!');
-                    }
-                } else {
-                    player2.attack('special');
-                    const pName = player2.preset.name === 'Nirnama' ? 'PUKULAN ANGIN!' : 
-                                  player2.preset.name === 'Cendana' ? 'TETHER STRIKE!' : 'GENGGAMAN MAUT!';
-                    showComboFeedback('p2ComboText', pName);
-                }
+                player2.attack('special');
+                const pName = player2.preset.name === 'Nirnama' ? 'PUKULAN ANGIN!' :
+                              player2.preset.name === 'Cendana' ? 'TETHER STRIKE!' : 
+                              player2.preset.name === 'Nadim' ? 'LARIAN KUNING!' : 'GENGGAMAN MAUT!';
+                showComboFeedback('p2ComboText', pName);
                 keysPressed['i'] = false;
             }
         }
@@ -2214,11 +2188,6 @@ function updateCPUAI() {
         // Move towards Player 1
         const dir = isP1Left ? -1 : 1;
         player2.velocity.x = dir * player2.speed * 0.7; // Walk speed
-        
-        // Accumulate charge for Nadim AI
-        if (player2.preset.name === 'Nadim') {
-            player2.chargeTimer += 16.67;
-        }
 
         // High range projectile attacks
         if (cpuActionTimer % 90 === 0 && Math.random() < 0.4) {
@@ -2243,10 +2212,9 @@ function updateCPUAI() {
                 if (player2.preset.name === 'Cendana') {
                     player2.attack('special');
                     showComboFeedback('p2ComboText', 'TETHER STRIKE!');
-                } else if (player2.preset.name === 'Nadim' && player2.chargeTimer >= 800) {
+                } else if (player2.preset.name === 'Nadim') {
                     player2.attack('special');
                     showComboFeedback('p2ComboText', 'LARIAN KUNING!');
-                    player2.chargeTimer = 0;
                 }
             } else {
                 // Just keep walking in
